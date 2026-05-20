@@ -1,0 +1,27 @@
+# ── Système ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+*~
+
+# ── Éditeurs ─────────────────────────────────────────────
+.vscode/settings.json
+.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# ── Node.js (si des outils sont installés) ───────────────
+node_modules/
+npm-debug.log*
+*.log
+
+# ── Variables d'environnement (NE JAMAIS VERSIONNER) ─────
+.env
+.env.local
+.env.*.local
+
+# ── Fichiers générés ─────────────────────────────────────
+dist/
+build/
