@@ -1,0 +1,59 @@
+/* TaskManager CPI — style.css */
+:root {
+  --primary: #2E75B6; --primary-dark: #1F3864; --success: #28a745;
+  --warning: #e0a800; --danger: #dc3545; --light: #f8f9fa;
+  --border: #dee2e6; --text: #212529; --text-muted: #6c757d;
+  --radius: 8px; --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow: 0 2px 10px rgba(0,0,0,0.12); --transition: 0.18s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: var(--text); min-height: 100vh; }
+header { background: var(--primary-dark); color: white; padding: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+.header-inner { max-width: 900px; margin: 0 auto; padding: 22px 24px; }
+header h1 { font-size: 1.9rem; font-weight: 700; }
+header .subtitle { margin-top: 4px; font-size: 0.88rem; opacity: 0.72; }
+main { max-width: 900px; margin: 32px auto; padding: 0 20px; }
+.card { background: white; border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); margin-bottom: 24px; }
+.form-section h2 { color: var(--primary-dark); font-size: 1.15rem; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.88rem; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 9px 13px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 0.93rem; color: var(--text); background: white; transition: border-color var(--transition), box-shadow var(--transition); }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(46,117,182,0.18); }
+.form-group textarea { resize: vertical; min-height: 72px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.required { color: var(--danger); margin-left: 2px; }
+.field-error { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--danger); min-height: 16px; }
+.btn { display: inline-flex; align-items: center; padding: 10px 22px; border: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: background var(--transition); }
+.btn-primary { background: var(--primary); color: white; } .btn-primary:hover { background: var(--primary-dark); }
+.btn-secondary { background: white; color: var(--text); border: 1.5px solid var(--border); } .btn-secondary:hover { background: var(--light); }
+.filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.filter-btn { padding: 7px 18px; border-radius: 20px; border: 2px solid var(--border); background: white; cursor: pointer; font-size: 0.87rem; font-weight: 600; color: var(--text-muted); transition: all var(--transition); }
+.filter-btn.active, .filter-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.task-list { display: flex; flex-direction: column; gap: 12px; }
+.empty-msg { text-align: center; color: var(--text-muted); padding: 48px 20px; font-size: 0.95rem; }
+.empty-msg.hidden { display: none; }
+.task-card { background: white; border-radius: var(--radius); padding: 16px 20px; box-shadow: var(--shadow-sm); border-left: 5px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; transition: box-shadow var(--transition); }
+.task-card:hover { box-shadow: var(--shadow); }
+/* Issue #08 : les classes de priorité seront ajoutées via le lot #08 */
+.task-card.status-done { opacity: 0.58; }
+.task-body { flex: 1; min-width: 0; }
+.task-title { font-weight: 700; font-size: 0.98rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.task-desc { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.4; }
+.task-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { padding: 2px 10px; border-radius: 12px; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+.badge-todo { background: #e9ecef; color: #495057; }
+.badge-inprogress { background: #cce5ff; color: #004085; }
+.badge-done { background: #d4edda; color: #155724; }
+/* Issue #08 : badge-high, badge-medium, badge-low → lot #08 */
+.task-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.btn-edit, .btn-delete { padding: 5px 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.82rem; font-weight: 600; transition: background var(--transition), color var(--transition); }
+.btn-edit { background: #e9ecef; color: var(--text); } .btn-edit:hover { background: var(--primary); color: white; }
+.btn-delete { background: #f8d7da; color: var(--danger); } .btn-delete:hover { background: var(--danger); color: white; }
+.stats-bar { background: white; border-radius: var(--radius); padding: 14px 20px; box-shadow: var(--shadow-sm); margin-bottom: 16px; display: flex; gap: 24px; font-size: 0.88rem; color: var(--text-muted); }
+.stat-item strong { color: var(--text); }
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.48); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+.modal.hidden { display: none; }
+.modal-content { background: white; border-radius: var(--radius); padding: 32px; width: 100%; max-width: 520px; box-shadow: 0 8px 40px rgba(0,0,0,0.22); }
+.modal-content h3 { margin-bottom: 20px; color: var(--primary-dark); font-size: 1.15rem; }
+.modal-actions { display: flex; gap: 10px; margin-top: 22px; justify-content: flex-end; }
+@media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } .task-card { flex-direction: column; } .task-actions { justify-content: flex-end; } }
