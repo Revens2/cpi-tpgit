@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskManager CPI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <h1>TaskManager CPI</h1>
+      <p class="subtitle">Gestion de tâches projet — Bachelor CPI</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Barre de statistiques (issue #09 — compteur bugué, à corriger en évaluation) -->
+    <div id="stats-bar" class="stats-bar">
+      <span class="stat-item">À faire : <strong id="count-todo">0</strong></span>
+      <span class="stat-item">En cours : <strong id="count-inprogress">0</strong></span>
+      <span class="stat-item">Terminé : <strong id="count-done">0</strong></span>
+    </div>
+
+    <!-- Formulaire d'ajout -->
+    <section class="card form-section">
+      <h2>Nouvelle tâche</h2>
+      <form id="task-form" novalidate>
+        <div class="form-group">
+          <label for="title">Titre <span class="required" aria-label="obligatoire">*</span></label>
+          <input type="text" id="title" placeholder="Ex : Implémenter la page de connexion" autocomplete="off">
+          <span class="field-error" id="title-error" role="alert"></span>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" rows="3" placeholder="Décrivez la tâche en détail…"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="status">Statut</label>
+            <select id="status">
+              <option value="todo">À faire</option>
+              <option value="inprogress">En cours</option>
+              <option value="done">Terminé</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="priority">Priorité</label>
+            <select id="priority">
+              <option value="low">Basse</option>
+              <option value="medium" selected>Moyenne</option>
+              <option value="high">Haute</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter la tâche</button>
+      </form>
+    </section>
+
+    <!-- Filtres -->
+    <section class="filters" aria-label="Filtres par statut">
+      <button class="filter-btn active" data-filter="all">Toutes</button>
+      <button class="filter-btn" data-filter="todo">À faire</button>
+      <button class="filter-btn" data-filter="inprogress">En cours</button>
+      <button class="filter-btn" data-filter="done">Terminé</button>
+    </section>
+
+    <!-- Liste des tâches -->
+    <section class="tasks-section" aria-label="Liste des tâches">
+      <div id="task-list" class="task-list"></div>
+      <p id="empty-msg" class="empty-msg" aria-live="polite">Aucune tâche pour le moment.</p>
+    </section>
+
+  </main>
+
+  <!-- Modal de modification -->
+  <div id="edit-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <h3 id="modal-title">Modifier la tâche</h3>
+      <div class="form-group">
+        <label for="edit-title">Titre</label>
+        <input type="text" id="edit-title">
+      </div>
+      <div class="form-group">
+        <label for="edit-description">Description</label>
+        <textarea id="edit-description" rows="3"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="edit-status">Statut</label>
+          <select id="edit-status">
+            <option value="todo">À faire</option>
+            <option value="inprogress">En cours</option>
+            <option value="done">Terminé</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-priority">Priorité</label>
+          <select id="edit-priority">
+            <option value="low">Basse</option>
+            <option value="medium">Moyenne</option>
+            <option value="high">Haute</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="save-edit"   class="btn btn-primary">Enregistrer</button>
+        <button id="cancel-edit" class="btn btn-secondary">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
