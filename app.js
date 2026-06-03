@@ -1,9 +1,8 @@
 /**
- * TaskManager CPI — app.js (LOT #04)
- * Issue #04 : Modification d'une tâche existante
+ * TaskManager CPI — app.js (LOT #05)
+ * Issue #05 : Suppression d'une tâche avec confirmation
  *
- * Ce lot ajoute : ouverture du modal d'édition, pré-remplissage
- * des champs, sauvegarde des modifications.
+ * Ce lot ajoute : deleteTask() avec window.confirm.
  */
 'use strict';
 
@@ -68,9 +67,15 @@ document.getElementById('task-form').addEventListener('submit', e => {
   saveTasks(); render(); e.target.reset(); document.getElementById('priority').value='medium'; titleInput.focus();
 });
 
-function deleteTask(id) { alert('Suppression non encore implémentée (lot #05)'); }
+// ── Issue #05 : Suppression avec confirmation ─────────────────────
+function deleteTask(id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+  if (!confirm(`Supprimer la tâche « ${task.title} » ? Cette action est irréversible.`)) return;
+  tasks = tasks.filter(t => t.id !== id);
+  saveTasks(); render();
+}
 
-// ── Issue #04 : Ouverture du modal de modification ────────────────
 function openEdit(id) {
   const task = tasks.find(t => t.id === id);
   if (!task) return;
@@ -82,8 +87,6 @@ function openEdit(id) {
   document.getElementById('edit-modal').classList.remove('hidden');
   document.getElementById('edit-title').focus();
 }
-
-// ── Issue #04 : Enregistrement des modifications ──────────────────
 document.getElementById('save-edit').addEventListener('click', () => {
   const title = document.getElementById('edit-title').value.trim();
   if (!title) { document.getElementById('edit-title').focus(); return; }
@@ -92,7 +95,6 @@ document.getElementById('save-edit').addEventListener('click', () => {
   tasks[idx] = { ...tasks[idx], title, description:document.getElementById('edit-description').value.trim(), status:document.getElementById('edit-status').value, priority:document.getElementById('edit-priority').value, updatedAt:new Date().toISOString() };
   saveTasks(); render(); closeModal();
 });
-
 document.getElementById('cancel-edit').addEventListener('click', closeModal);
 document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
