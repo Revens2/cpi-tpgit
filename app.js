@@ -64,8 +64,8 @@ document.getElementById('task-form').addEventListener('submit', e => {
   const title = titleInput.value.trim();
   if (!title) { titleError.textContent = 'Le titre est obligatoire.'; titleInput.focus(); return; }
   titleError.textContent = '';
-  tasks.push({ id:genId(), title, description:document.getElementById('description').value.trim(), status:document.getElementById('status').value, priority:document.getElementById('priority').value, createdAt:new Date().toISOString() });      
-  saveTasks(); render(); e.target.reset(); document.getElementById('priority').value='medium'; titleInput.focus();       
+  tasks.push({ id:genId(), title, description:document.getElementById('description').value.trim(), status:document.getElementById('status').value, priority:document.getElementById('priority').value, createdAt:new Date().toISOString() });
+  saveTasks(); render(); e.target.reset(); document.getElementById('priority').value='medium'; titleInput.focus();
 });
 
 function deleteTask(id) { alert('Suppression non encore implémentée (lot #05)'); }
@@ -83,7 +83,16 @@ function openEdit(id) {
   document.getElementById('edit-title').focus();
 }
 
-document.getElementById('save-edit').addEventListener('click', () => {});
+// ── Issue #04 : Enregistrement des modifications ──────────────────
+document.getElementById('save-edit').addEventListener('click', () => {
+  const title = document.getElementById('edit-title').value.trim();
+  if (!title) { document.getElementById('edit-title').focus(); return; }
+  const idx = tasks.findIndex(t => t.id === editingId);
+  if (idx === -1) return;
+  tasks[idx] = { ...tasks[idx], title, description:document.getElementById('edit-description').value.trim(), status:document.getElementById('edit-status').value, priority:document.getElementById('edit-priority').value, updatedAt:new Date().toISOString() };
+  saveTasks(); render(); closeModal();
+});
+
 document.getElementById('cancel-edit').addEventListener('click', closeModal);
 document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
