@@ -57,8 +57,31 @@ function render() {
   updateStats();
 }
 
-// Non implémentés (lots suivants)
-document.getElementById('task-form').addEventListener('submit', e => { e.preventDefault(); });
+// ── Issue #03 : Soumission du formulaire d'ajout ──────────────────
+document.getElementById('task-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const titleInput = document.getElementById('title');
+  const titleError = document.getElementById('title-error');
+  const title = titleInput.value.trim();
+  if (!title) {
+    titleError.textContent = 'Le titre est obligatoire.';
+    titleInput.focus();
+    return;
+  }
+  titleError.textContent = '';
+  tasks.push({
+    id: genId(), title,
+    description: document.getElementById('description').value.trim(),
+    status:   document.getElementById('status').value,
+    priority: document.getElementById('priority').value,
+    createdAt: new Date().toISOString(),
+  });
+  saveTasks(); render();
+  e.target.reset();
+  document.getElementById('priority').value = 'medium';
+  titleInput.focus();
+});
+
 function deleteTask(id) { alert('Suppression non encore implémentée (lot #05)'); }
 function openEdit(id)   { alert('Modification non encore implémentée (lot #04)'); }
 document.getElementById('save-edit').addEventListener('click', () => {});
