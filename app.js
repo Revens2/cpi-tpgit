@@ -31,9 +31,36 @@ function updateStats() {
   document.getElementById('count-done').textContent       = tasks.length;
 }
 
-// Rendu — non implémenté (lot #02)
+// ── Issue #02 : render() ──────────────────────────────────────────
 function render() {
-  document.getElementById('empty-msg').classList.remove('hidden');
+  const list     = document.getElementById('task-list');
+  const emptyMsg = document.getElementById('empty-msg');
+  const filtered = currentFilter === 'all' ? tasks : tasks.filter(t => t.status === currentFilter);
+  list.innerHTML = '';
+  if (filtered.length === 0) { emptyMsg.classList.remove('hidden'); updateStats(); return; }
+  emptyMsg.classList.add('hidden');
+  filtered.forEach(task => {
+    const card = document.createElement('article');
+    card.className = `task-card status-${task.status}`;
+    card.dataset.id = task.id;
+    card.innerHTML = `
+      <div class="task-body">
+        <div class="task-title">${escHtml(task.title)}</div>
+        ${task.description ? `<div class="task-desc">${escHtml(task.description)}</div>` : ''}
+        <div class="task-meta">
+          <span class="badge badge-${task.status}">${STATUS_LABELS[task.status]}</span>
+          <span class="badge">${PRIORITY_LABELS[task.priority]}</span>
+        </div>
+      </div>
+      <div class="task-actions">
+        <button class="btn-edit">Modifier</button>
+        <button class="btn-delete">Supprimer</button>
+      </div>`;
+    card.querySelector('.btn-edit').addEventListener('click',   () => openEdit(task.id));
+    card.querySelector('.btn-delete').addEventListener('click', () => deleteTask(task.id));
+    list.appendChild(card);
+  });
+  updateStats();
 }
 
 // Non implémentés (lots suivants)
