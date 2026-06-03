@@ -1,9 +1,9 @@
 /**
- * TaskManager CPI — app.js (LOT #03)
- * Issue #03 : Formulaire d'ajout d'une tâche
+ * TaskManager CPI — app.js (LOT #04)
+ * Issue #04 : Modification d'une tâche existante
  *
- * Ce lot ajoute : soumission du formulaire, validation du titre,
- * création d'une tâche et rafraîchissement de la liste.
+ * Ce lot ajoute : ouverture du modal d'édition, pré-remplissage
+ * des champs, sauvegarde des modifications.
  */
 'use strict';
 
@@ -57,33 +57,32 @@ function render() {
   updateStats();
 }
 
-// ── Issue #03 : Soumission du formulaire d'ajout ──────────────────
 document.getElementById('task-form').addEventListener('submit', e => {
   e.preventDefault();
   const titleInput = document.getElementById('title');
   const titleError = document.getElementById('title-error');
   const title = titleInput.value.trim();
-  if (!title) {
-    titleError.textContent = 'Le titre est obligatoire.';
-    titleInput.focus();
-    return;
-  }
+  if (!title) { titleError.textContent = 'Le titre est obligatoire.'; titleInput.focus(); return; }
   titleError.textContent = '';
-  tasks.push({
-    id: genId(), title,
-    description: document.getElementById('description').value.trim(),
-    status:   document.getElementById('status').value,
-    priority: document.getElementById('priority').value,
-    createdAt: new Date().toISOString(),
-  });
-  saveTasks(); render();
-  e.target.reset();
-  document.getElementById('priority').value = 'medium';
-  titleInput.focus();
+  tasks.push({ id:genId(), title, description:document.getElementById('description').value.trim(), status:document.getElementById('status').value, priority:document.getElementById('priority').value, createdAt:new Date().toISOString() });      
+  saveTasks(); render(); e.target.reset(); document.getElementById('priority').value='medium'; titleInput.focus();       
 });
 
 function deleteTask(id) { alert('Suppression non encore implémentée (lot #05)'); }
-function openEdit(id)   { alert('Modification non encore implémentée (lot #04)'); }
+
+// ── Issue #04 : Ouverture du modal de modification ────────────────
+function openEdit(id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+  editingId = id;
+  document.getElementById('edit-title').value       = task.title;
+  document.getElementById('edit-description').value = task.description;
+  document.getElementById('edit-status').value      = task.status;
+  document.getElementById('edit-priority').value    = task.priority;
+  document.getElementById('edit-modal').classList.remove('hidden');
+  document.getElementById('edit-title').focus();
+}
+
 document.getElementById('save-edit').addEventListener('click', () => {});
 document.getElementById('cancel-edit').addEventListener('click', closeModal);
 document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
